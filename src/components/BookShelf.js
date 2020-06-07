@@ -1,5 +1,5 @@
 import React from 'react'
-import BookListItem from './BookListItem'
+import BookShelfItem from './BookShelfItem'
 import PropTypes from 'prop-types'
 
 function BookList(props) {
@@ -8,7 +8,7 @@ function BookList(props) {
       <h2 className="bookshelf-title">Want to Read</h2>
       <div className="bookshelf-books">
         <ul className="books-grid">
-          <BookListItem />
+          <BookShelfItem />
         </ul>
       </div>
     </div>
