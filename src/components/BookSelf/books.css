@@ -1,0 +1,38 @@
+.books-grid {
+  display: grid;
+  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-column-gap: 22px;
+  grid-row-gap: 25px;
+}
+
+.dev-card {
+  position: relative;
+  border: 2px dotted whitesmoke;
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  padding: 20px;
+  min-height: 200px;
+}
+.dev-card .eye-color {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+.dev-desc {
+  display: flex;
+  justify-content: space-between;
+}
+.dev-no {
+  position: absolute;
+  bottom: 0;
+  color: rgba(113, 113, 113, 0.34);
+  font-weight: 600;
+  font-size: 40px;
+}
+.dev-name {
+  border: 2px solid blanchedalmond;
+  padding: 5px;
+  padding-bottom: 5px;
+}

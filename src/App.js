@@ -13,11 +13,14 @@ class BooksApp extends React.Component {
     try {
       const books = await BooksAPI.getAll()
       console.log('[all books] ->', books)
+      this.setState({ books: books })
     } catch (error) {
       console.log('[Error: error from gettings books] ->', error.message)
     }
   }
-  state = {}
+  state = {
+    books: [],
+  }
 
   render() {
     return (
