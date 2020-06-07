@@ -1,0 +1,36 @@
+.navigation {
+  display: flex;
+  width: 100%;
+  background-color: bisque;
+  height: 50px;
+  color: black;
+  align-items: center;
+  padding: 0 80px;
+  justify-content: space-between;
+}
+.navigation__brand a {
+  color: black;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.navigation__links {
+  width: 30%;
+  justify-content: flex-end;
+  display: flex;
+}
+.navigation__links-item {
+  padding-left: 20px;
+}
+.navigation__links a {
+  font-weight: 400;
+  font-size: 15px;
+}
+
+.navigation__links li {
+  list-style: none;
+}
+
+.navigation__links li a {
+  text-decoration: none;
+  color: black;
+}
