@@ -1,29 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function BookShelfItem(props) {
-  return (
-    <div className="book">
-      <div className="book-cover">
-        <img src="https://marketplace.canva.com/EADanktU9AE/1/0/251w/canva-green-beach-photo-book-cover-o2wPCwYqW2w.jpg" alt="image of something" />
-      </div>
+class BookShelfItem extends React.Component {
+  constructor(props) {
+    super(props)
 
-      <div className="book-description">
-        <div className="book-title">1776</div>
-        <div className="book-authors">David McCullough</div>
-        <div className="book-shelf-changer">
-          <select className="select">
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
-            <option value="none">None</option>
-          </select>
+    this.state = {
+      readingState: this.props.bookDetails.shelf || 'none',
+    }
+  }
+
+  handleChange = (event) => {
+    this.setState({ readingState: event.target.value })
+  }
+
+  render() {
+    const { bookDetails } = this.props
+    return (
+      <div className="book">
+        <div className="book-cover">
+          <img src={bookDetails.imageLinks ? bookDetails.imageLinks.thumbnail : ''} alt={bookDetails.title} />
+        </div>
+
+        <div className="book-description">
+          <div className="book-title">{bookDetails.title}</div>
+          <div className="book-authors">{bookDetails.authors}</div>
+          <div className="book-shelf-changer">
+            <select className="select" value={this.state.readingState} onChange={this.handleChange}>
+              <option value="currentlyReading">Currently Reading</option>
+              <option value="wantToRead">Want to Read</option>
+              <option value="read">Read</option>
+              <option value="none">None</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
-BookShelfItem.propTypes = {}
+BookShelfItem.propTypes = {
+  bookDetails: PropTypes.object.isRequired,
+}
 
 export default BookShelfItem

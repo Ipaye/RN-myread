@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import './books.css'
 
 function BookShelf(props) {
-  console.log('[props] ->', props)
   const { books, bookself } = props
 
   const changeName = (name) => {
@@ -19,11 +18,10 @@ function BookShelf(props) {
 
       default:
         return 'Unkown Title'
-        break
     }
   }
 
-  const shelfBooks = books.filter((current) => bookself == current.shelf).map((book) => <BookShelfItem key={book.id} bookDetails={book} />)
+  const shelfBooks = books.filter((current) => bookself === current.shelf).map((book) => <BookShelfItem key={book.id} bookDetails={book} />)
 
   return (
     <div className="bookshelf">
