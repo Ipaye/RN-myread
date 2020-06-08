@@ -30,7 +30,6 @@ export class Home extends Component {
     try {
       const books = await BooksAPI.getAll()
       const sortedBooks = this.sortBooks(books)
-      console.log('[sorted] ->', sortedBooks)
       this.setState({ books: books, bookshelf: sortedBooks, isLoading: false })
     } catch (error) {
       console.log('[Error: error from gettings books] ->', error.message)
