@@ -1,27 +1,12 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 
-import * as BooksAPI from './utils/BooksAPI'
-
 // Pages imports
 import Header from './components/Header/Header'
 import Home from './pages/Home'
 import Search from './pages/Search'
 
 class BooksApp extends React.Component {
-  async componentDidMount() {
-    try {
-      const books = await BooksAPI.getAll()
-      console.log('[all books] ->', books)
-      this.setState({ books: books })
-    } catch (error) {
-      console.log('[Error: error from gettings books] ->', error.message)
-    }
-  }
-  state = {
-    books: [],
-  }
-
   render() {
     return (
       <BrowserRouter>
