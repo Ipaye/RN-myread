@@ -1,17 +1,55 @@
 import React from 'react'
+import * as BooksAPI from '../utils/BooksAPI'
+import BookShelfItem from '../components/BookSelf/BookShelfItem'
 
 class Search extends React.Component {
+  state = {
+    query: '',
+    isLoading: false,
+    searchResult: [],
+  }
+
+  handleChange = (event) => {
+    const queryEntered = event.target.value
+    this.setState({ query: queryEntered })
+
+    if (queryEntered !== '') {
+      this.setState({ isLoading: true })
+
+      const self = this
+      setTimeout(() => {
+        self.findBooks(queryEntered)
+      }, 5000)
+    }
+  }
+
+  findBooks = async (bookName) => {
+    try {
+      const searchResult = await BooksAPI.search(bookName)
+
+      // Check for errors
+      if (searchResult.error) {
+        this.setState({ isLoading: false, searchResult: [] })
+      } else {
+        this.setState({ isLoading: false, searchResult: searchResult })
+      }
+    } catch (error) {
+      this.setState({ isLoading: false })
+      console.log('[error from search] ->', error)
+    }
+  }
+
   render() {
+    const renderSearch = this.state.searchResult ? this.state.searchResult.map((book) => <BookShelfItem key={book.id} bookDetails={book} />) : ''
     return (
       <div className="search-books">
         <div className="search-books-bar">
-          <button className="close-search"></button>
           <div className="search-books-input-wrapper">
-            <input type="text" placeholder="Search by title or author" />
+            <input type="text" value={this.state.query} onChange={this.handleChange} placeholder="Search by title or author" />
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid" />
+          <div className="books-grid">{this.state.isLoading ? <p>books are loading....</p> : renderSearch}</div>
         </div>
       </div>
     )
