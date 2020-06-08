@@ -1,80 +1,52 @@
 import React, { Component } from 'react'
+import * as BooksAPI from '../utils/BooksAPI'
+
+// Component Imports
+import BookSelf from '../components/BookSelf/BookShelf'
 
 export class Home extends Component {
+  state = {
+    isLoading: true,
+    books: [],
+    bookshelf: [],
+  }
+
+  sortBooks = (books) => {
+    const bookStore = {}
+
+    books.forEach((book) => {
+      let bookShelf = book.shelf
+      if (!bookStore[bookShelf]) {
+        bookStore[bookShelf] = []
+      } else {
+        bookStore[bookShelf].push(book)
+      }
+    })
+
+    return bookStore
+  }
+
+  async componentDidMount() {
+    try {
+      const books = await BooksAPI.getAll()
+      const sortedBooks = this.sortBooks(books)
+      console.log('[sorted] ->', sortedBooks)
+      this.setState({ books: books, bookshelf: sortedBooks, isLoading: false })
+    } catch (error) {
+      console.log('[Error: error from gettings books] ->', error.message)
+    }
+  }
+
   render() {
+    const { bookshelf, books } = this.state
     return (
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          {/* Todo: Render a Single Booshelf here */}
-          <div className="bookshelf">
-            <h2 className="bookshelf-title">Currently Reading</h2>
-            <div className="bookshelf-books">
-              <ol className="books-grid">
-                <li>
-                  <div className="book">
-                    <div className="book-top">
-                      <div
-                        className="book-cover"
-                        style={{
-                          width: 128,
-                          height: 193,
-                          backgroundImage:
-                            'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")',
-                        }}
-                      />
-                      <div className="book-shelf-changer">
-                        <select>
-                          <option value="move" disabled>
-                            Move to...
-                          </option>
-                          <option value="currentlyReading">Currently Reading</option>
-                          <option value="wantToRead">Want to Read</option>
-                          <option value="read">Read</option>
-                          <option value="none">None</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="book-title">To Kill a Mockingbird</div>
-                    <div className="book-authors">Harper Lee</div>
-                  </div>
-                </li>
-                <li>
-                  <div className="book">
-                    <div className="book-top">
-                      <div
-                        className="book-cover"
-                        style={{
-                          width: 128,
-                          height: 188,
-                          backgroundImage:
-                            'url("http://books.google.com/books/content?id=yDtCuFHXbAYC&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE72RRiTR6U5OUg3IY_LpHTL2NztVWAuZYNFE8dUuC0VlYabeyegLzpAnDPeWxE6RHi0C2ehrR9Gv20LH2dtjpbcUcs8YnH5VCCAH0Y2ICaKOTvrZTCObQbsfp4UbDqQyGISCZfGN&source=gbs_api")',
-                        }}
-                      />
-                      <div className="book-shelf-changer">
-                        <select>
-                          <option value="move" disabled>
-                            Move to...
-                          </option>
-                          <option value="currentlyReading">Currently Reading</option>
-                          <option value="wantToRead">Want to Read</option>
-                          <option value="read">Read</option>
-                          <option value="none">None</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div className="book-title">Ender's Game</div>
-                    <div className="book-authors">Orson Scott Card</div>
-                  </div>
-                </li>
-              </ol>
-            </div>
-          </div>
+          {this.state.isLoading ? <p>books are loading....</p> : Object.keys(bookshelf).map((shelves, index) => <BookSelf key={index} bookself={shelves} books={books} />)}
         </div>
-
-        {/*Todo: Add Icon Here */}
       </div>
     )
   }
