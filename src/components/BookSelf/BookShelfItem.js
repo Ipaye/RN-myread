@@ -8,7 +8,7 @@ function BookShelfItem(props) {
         <img src="https://marketplace.canva.com/EADanktU9AE/1/0/251w/canva-green-beach-photo-book-cover-o2wPCwYqW2w.jpg" alt="image of something" />
       </div>
 
-      <div class="book-description">
+      <div className="book-description">
         <div className="book-title">1776</div>
         <div className="book-authors">David McCullough</div>
         <div className="book-shelf-changer">
