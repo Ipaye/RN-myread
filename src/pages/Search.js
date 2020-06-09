@@ -74,7 +74,7 @@ class Search extends React.Component {
           let renderBookshelf = ''
 
           availableBooks.forEach((currentbook) => {
-            if (currentbook.id == book.id) {
+            if (currentbook.id === book.id) {
               renderBookshelf = currentbook.shelf
             }
           })

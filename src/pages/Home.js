@@ -30,7 +30,6 @@ export class Home extends Component {
   handleShelfChange = async (book, shelf) => {
     try {
       const updateResult = await BooksAPI.update(book, shelf)
-      console.log('[update result  ] ->', updateResult)
       this.fetchBooks()
     } catch (error) {
       console.log('[error from update] ->', error)
