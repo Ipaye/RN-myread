@@ -6,7 +6,16 @@ class BookShelfItem extends React.Component {
     super(props)
 
     this.state = {
-      readingState: this.props.bookDetails.shelf || 'none',
+      readingState: this.getState(),
+    }
+  }
+  getState = () => {
+    if (this.props.bookDetails.shelf) {
+      return this.props.bookDetails.shelf
+    } else if (this.props.searchShelf) {
+      return this.props.searchShelf
+    } else {
+      return 'none'
     }
   }
 

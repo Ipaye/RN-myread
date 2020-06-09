@@ -4,22 +4,38 @@ import BookShelfItem from '../components/BookSelf/BookShelfItem'
 
 class Search extends React.Component {
   state = {
+    availableBooks: [],
     query: '',
     isLoading: false,
     searchResult: [],
   }
 
+  componentDidMount() {
+    this.fetchBooks()
+  }
+
+  fetchBooks = async (_) => {
+    try {
+      const books = await BooksAPI.getAll()
+      this.setState({ availableBooks: books })
+    } catch (error) {
+      console.log('[Error: error from gettings books] ->', error.message)
+    }
+  }
+
   handleChange = (event) => {
     const queryEntered = event.target.value
-    this.setState({ query: queryEntered })
+    this.setState({ query: event.target.value })
 
     if (queryEntered !== '') {
       this.setState({ isLoading: true })
 
       const self = this
       setTimeout(() => {
-        self.findBooks(queryEntered)
+        self.findBooks(decodeURI(encodeURI(queryEntered)))
       }, 5000)
+    } else {
+      this.setState({ searchResult: [] })
     }
   }
 
@@ -51,7 +67,18 @@ class Search extends React.Component {
 
   render() {
     const renderSearch = this.state.searchResult
-      ? this.state.searchResult.map((book) => <BookShelfItem key={book.id} bookDetails={book} onChangeHandler={this.handleOnChange} />)
+      ? this.state.searchResult.map((book) => {
+          const { availableBooks } = this.state
+          let renderBookshelf = ''
+
+          availableBooks.forEach((currentbook) => {
+            if (currentbook.id == book.id) {
+              renderBookshelf = currentbook.shelf
+            }
+          })
+
+          return <BookShelfItem key={book.id} bookDetails={book} searchShelf={renderBookshelf} onChangeHandler={this.handleOnChange} />
+        })
       : ''
     return (
       <div className="search-books">
