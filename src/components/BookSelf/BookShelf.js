@@ -21,7 +21,13 @@ function BookShelf(props) {
     }
   }
 
-  const shelfBooks = books.filter((current) => bookself === current.shelf).map((book) => <BookShelfItem key={book.id} bookDetails={book} />)
+  const handleOnChange = (book, shelf) => {
+    props.handleShelfChange(book, shelf)
+  }
+
+  const shelfBooks = books
+    .filter((current) => bookself === current.shelf)
+    .map((book) => <BookShelfItem key={book.id} bookDetails={book} onChangeHandler={handleOnChange} />)
 
   return (
     <div className="bookshelf">
@@ -35,6 +41,7 @@ function BookShelf(props) {
 }
 
 BookShelf.propTypes = {
+  handleShelfChange: PropTypes.func.isRequired,
   bookself: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
 }
