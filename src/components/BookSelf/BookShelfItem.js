@@ -12,6 +12,8 @@ class BookShelfItem extends React.Component {
 
   handleChange = (event) => {
     this.setState({ readingState: event.target.value })
+
+    this.props.onChangeHandler(this.props.bookDetails, event.target.value)
   }
 
   render() {
@@ -41,6 +43,7 @@ class BookShelfItem extends React.Component {
 
 BookShelfItem.propTypes = {
   bookDetails: PropTypes.object.isRequired,
+  onChangeHandler: PropTypes.func.isRequired,
 }
 
 export default BookShelfItem
