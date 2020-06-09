@@ -39,8 +39,20 @@ class Search extends React.Component {
     }
   }
 
+  handleOnChange = async (book, shelf) => {
+    console.log('[changed in Search] ->', book, shelf)
+    try {
+      const updateResult = await BooksAPI.update(book, shelf)
+      console.log('[update result  ] ->', updateResult)
+    } catch (error) {
+      console.log('[error from update] ->', error)
+    }
+  }
+
   render() {
-    const renderSearch = this.state.searchResult ? this.state.searchResult.map((book) => <BookShelfItem key={book.id} bookDetails={book} />) : ''
+    const renderSearch = this.state.searchResult
+      ? this.state.searchResult.map((book) => <BookShelfItem key={book.id} bookDetails={book} onChangeHandler={this.handleOnChange} />)
+      : ''
     return (
       <div className="search-books">
         <div className="search-books-bar">
