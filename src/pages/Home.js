@@ -3,6 +3,7 @@ import * as BooksAPI from '../utils/BooksAPI'
 
 // Component Imports
 import BookSelf from '../components/BookSelf/BookShelf'
+import { Link } from 'react-router-dom'
 
 export class Home extends Component {
   state = {
@@ -65,6 +66,9 @@ export class Home extends Component {
               <BookSelf key={index} bookself={shelves} handleShelfChange={this.handleShelfChange} books={books} />
             ))
           )}
+        </div>
+        <div className="open-search">
+          <Link to="/search">Add a book</Link>
         </div>
       </div>
     )

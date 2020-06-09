@@ -1,4 +1,6 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
+
 import * as BooksAPI from '../utils/BooksAPI'
 import BookShelfItem from '../components/BookSelf/BookShelfItem'
 
@@ -81,8 +83,11 @@ class Search extends React.Component {
         })
       : ''
     return (
-      <div className="search-books">
-        <div className="search-books-bar">
+      <div className="search-books" style={{ paddingTop: 20 }}>
+        <Link to="/" className="btn btn-black">
+          Back
+        </Link>
+        <div className="search-books-bar" style={{ marginTop: 20 }}>
           <div className="search-books-input-wrapper">
             <input type="text" value={this.state.query} onChange={this.handleChange} placeholder="Search by title or author" />
           </div>
