@@ -91,3 +91,9 @@ input[type='number'] {
   margin-right: 0;
   margin-left: 0;
 }
+
+.search-books-input-wrapper input {
+  width: 100%;
+  padding: 20px 40px;
+  font-size: 18px;
+}
