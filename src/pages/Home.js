@@ -26,7 +26,17 @@ export class Home extends Component {
     return bookStore
   }
 
-  async componentDidMount() {
+  handleShelfChange = async (book, shelf) => {
+    try {
+      const updateResult = await BooksAPI.update(book, shelf)
+      console.log('[update result  ] ->', updateResult)
+      this.fetchBooks()
+    } catch (error) {
+      console.log('[error from update] ->', error)
+    }
+  }
+
+  fetchBooks = async (_) => {
     try {
       const books = await BooksAPI.getAll()
       const sortedBooks = this.sortBooks(books)
@@ -34,6 +44,10 @@ export class Home extends Component {
     } catch (error) {
       console.log('[Error: error from gettings books] ->', error.message)
     }
+  }
+
+  async componentDidMount() {
+    this.fetchBooks()
   }
 
   render() {
@@ -44,7 +58,13 @@ export class Home extends Component {
           <h1>MyReads</h1>
         </div>
         <div className="list-books-content">
-          {this.state.isLoading ? <p>books are loading....</p> : Object.keys(bookshelf).map((shelves, index) => <BookSelf key={index} bookself={shelves} books={books} />)}
+          {this.state.isLoading ? (
+            <p>books are loading....</p>
+          ) : (
+            Object.keys(bookshelf).map((shelves, index) => (
+              <BookSelf key={index} bookself={shelves} handleShelfChange={this.handleShelfChange} books={books} />
+            ))
+          )}
         </div>
       </div>
     )
